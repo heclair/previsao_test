@@ -1,45 +1,67 @@
-import PrevisaoController from "../src/controllers/PrevisaoController";
 import { Request, Response } from "express";
- 
-describe("PrevisaoController teste", () => {
-    it("lista cidades", async () => {
-        const req = { params: { cidade: "caraguatatuba" } } as unknown as Request;
+import controller from "../src/controllers/PrevisaoController";
+import Cptec from "../src/services/Cptec";
+
+describe("Cptec", () => {
+    it("Lista cidades", async () => {
+      
+        const req = {params:{cidade: "santa branca"}} as unknown as Request;
         const res = {} as unknown as Response;
         const next = () => {};
- 
-        await PrevisaoController.listaCidades(req, res, next);
-        expect(res.locals).toMatchObject({nome: "Caraguatatuba"});
+        
+        await controller.listaCidades(req,res, next);
+        
+        expect(res.locals).toEqual( {
+            id: "4528",
+            nome: "Santa Branca",
+            uf: "SP"
+          });
     });
- 
-    it("Previsao 7 dias", async () => {
-        const req = {} as unknown as Request;
-        const res = { 
-            locals: { id: "1315" },
-            send: jest.fn()
+
+    it("Previsão", async () => {
+      
+        const req = {} as Request;
+        const res = {
+            json: jest.fn(),
+            locals:{id: "4528"}
         } as unknown as Response;
- 
-        await PrevisaoController.previsao7dias(req, res);
-        expect(res.send).toHaveBeenCalledWith(expect.objectContaining({ nome: "Caraguatatuba" })); 
+        
+        await controller.previsao(req, res);
+        
+        expect(res.json).toHaveBeenCalledWith(
+            expect.objectContaining({"nome": "Santa Branca"})
+       );
     });
- 
-    it("Previsao", async () => {
-        const req = {} as unknown as Request;
-        const res = { 
-            locals: { id: "1315" },
-            send: jest.fn()
+
+    it("Previsão de 7 dias", async () => {
+      
+        const req = {} as Request;
+        const res = {
+            json: jest.fn(),
+            locals:{id: "4528"}
         } as unknown as Response;
- 
-        await PrevisaoController.previsao(req, res);
-        expect(res.send).toHaveBeenCalledWith(expect.objectContaining({ nome: "Caraguatatuba" }));
+        
+        await controller.previsao7dias(req, res);
+        
+        expect(res.json).toHaveBeenCalledWith(
+            expect.objectContaining({"nome": "Santa Branca"})
+           
+       );
     });
- 
-    it("Previsao Estendida", async () => {
-        const req = {} as unknown as Request;
-        const res = { 
-            locals: { id: "1315" },
-            send: jest.fn()
+
+    it("Previsão Estendida", async () => {
+        
+        const req = {} as Request;
+        const res = {
+            json: jest.fn(),
+            locals:{id: "4528"}
         } as unknown as Response;
-        await PrevisaoController.previsaoEstendida(req, res);
-        expect(res.send).toHaveBeenCalledWith(expect.objectContaining({ nome: "Caraguatatuba" }));
+        
+        await controller.previsaoEstendida(req, res);
+        
+        expect(res.json).toHaveBeenCalledWith(
+            expect.objectContaining({"nome": "Santa Branca"})
+
+       );
     });
 });
