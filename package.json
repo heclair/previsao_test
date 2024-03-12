@@ -1,7 +1,7 @@
 {
   "name": "servidor",
   "version": "1.0.0",
-  "description": "",
+  "description": "O código faz requisições no Web Service do CPTEC para obter as previsões do tempo (http://servicos.cptec.inpe.br/XML).",
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src",
@@ -36,5 +36,8 @@
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }
