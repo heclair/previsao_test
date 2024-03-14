@@ -3,16 +3,32 @@ import request from "supertest";
 import PrevisaoController from "../src/controllers/PrevisaoController";
 import Cptec from "../src/services/Cptec";
 import { parseString } from 'xml2js';
+import api from "../src/services/api";
 
 
-jest.mock("../src/services/api", () => {});
-
-it("Lista cidades", async() =>{
-    const cptec = new Cptec();
-    const r = await cptec.listaCidades("santa branca");
-    expect(r).toMatch(/<nome>Santa Branca<\/nome>/i);
+jest.mock("../src/services/api", () => {
+    return {
+        get: jest.fn().mockResolvedValue({ data: "response data" })
+    };
 });
 
+describe("Testes unitarios classe Cptec", () =>{
+    it("lista Cidades", async () => {
+        const cptec = new Cptec();
+        const cidade = "ubatuba";
+        await cptec.listaCidades(cidade);
+
+        expect(api.get).toHaveBeenCalledWith(`/listaCidades?city=${cidade.toLocaleLowerCase()}`);
+    });
+
+    it("previsao", async () => {
+        const cptec = new Cptec();
+        const id = "5515"
+        await cptec.previsao(id);
+
+        expect(api.get).toHaveBeenCalledWith(`/cidade/${id}/previsao.xml`);
+    });
+})
 
 /*
 describe("Cptec", () => {
