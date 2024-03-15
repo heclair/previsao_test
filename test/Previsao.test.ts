@@ -21,7 +21,7 @@ jest.mock("../src/services/Cptec", () => {
         })
         .mockImplementationOnce(() => {
             return {
-                previsao: jest.fn().mockImplementation(() => {
+                previsao: jest.fn().mockImplementation(() => {''
                         return "<note><cidade>santa branca</cidade></note>";
                     })
             };
