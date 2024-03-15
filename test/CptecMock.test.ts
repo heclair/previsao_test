@@ -15,7 +15,7 @@ jest.mock("../src/services/api", () => {
 describe("Testes unitarios classe Cptec", () =>{
     it("lista Cidades", async () => {
         const cptec = new Cptec();
-        const cidade = "ubatuba";
+        const cidade = "santa branca";
         await cptec.listaCidades(cidade);
 
         expect(api.get).toHaveBeenCalledWith(`/listaCidades?city=${cidade.toLocaleLowerCase()}`);
